@@ -1,0 +1,10 @@
+/* options for development only */
+
+.step {
+	border: 2px solid #ee593e !important;
+	border-radius: 20px !important;
+}
+
+.step.future {
+	opacity: 0.3 !important;
+}

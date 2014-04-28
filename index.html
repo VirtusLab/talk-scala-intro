@@ -1,0 +1,846 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=1024"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<title>Scala Intro</title>
+
+	<meta name="description" content=""/>
+	<meta name="author" content="Jerzy Müller"/>
+
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic"
+	      rel="stylesheet"/>
+
+	<link href="css/impress-scala-intro.css" rel="stylesheet"/>
+	<!--<link href="css/impress-scala-intro-development.css" rel="stylesheet"/>-->
+
+	<script src="js/shCore.js"></script>
+	<script src="js/shBrushScala.js"></script>
+	<script src="js/shBrushJava.js"></script>
+
+	<link href="css/shCore.css" rel="stylesheet">
+	<link href="css/shThemeDefault.css" rel="stylesheet">
+
+	<link rel="icon" href="img/favicon-32.png" type="image/png">
+</head>
+
+<body class="impress-not-supported">
+
+<!--
+    For example this fallback message is only visible when there is `impress-not-supported` class on body.
+-->
+<div class="fallback-message">
+	<p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified
+		version of this presentation.</p>
+
+	<p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
+</div>
+
+<div id="impress">
+
+<!--
+
+	So to make a summary of all the possible attributes used to position presentation steps, we have:
+
+	* `data-x`, `data-y`, `data-z` -- they define the position of **the center** of step element on
+		the canvas in pixels; their default value is 0;
+	* `data-rotate-x`, `data-rotate-y`, 'data-rotate-z`, `data-rotate` -- they define the rotation of
+		the element around given axis in degrees; their default value is 0; `data-rotate` and `data-rotate-z`
+		are exactly the same;
+	* `data-scale` -- defines the scale of step element; default value is 1
+
+	These values are used by impress.js in CSS transformation functions, so for more information consult
+	CSS transform docs: https://developer.mozilla.org/en/CSS/transform
+
+-->
+
+<div id="start" class="step" data-x="0" data-y="0" data-rotate="-90" data-scale="4">
+	<img id="scala-logo" src="img/scala-logo.png">
+
+	<div id="introduction">the short introduction</div>
+</div>
+
+<div id="me" class="step" data-x="500" data-y="-1350" data-rotate="-90" data-scale="0.5">
+
+	<div id="author">
+		<img src="img/people/jerzy-muller.png">
+
+		<div>
+			<h3>Jerzy Müller</h3>
+
+			<p>Scala Developer at <img id="company" src="img/virtus-small.png"></p>
+
+			<p>2 years of professional experience in Scala</p>
+		</div>
+	</div>
+
+</div>
+
+<div id="odersky" class="step" data-x="900" data-y="1350" data-rotate="-90">
+
+	<div>
+		<img src="img/people/martin-odersky.JPG">
+
+		<div>
+			<h3>Martin Odersky</h3>
+
+			<ul>
+				<li>worked on Pizza, GJ, Java generics and javac</li>
+				<li>in 2003 he wrote "<i>Programming in Scala</i>"</li>
+				<li>with his company, Typesafe he continue to support and improve Scala</li>
+				<li>current Scala version is 2.10 (01.2013)</li>
+			</ul>
+		</div>
+	</div>
+
+</div>
+
+<div id="scala" class="step" data-x="900" data-y="440" data-rotate="-90">
+	<div class="header">Why Scala?</div>
+	<ul>
+		<li>Scala is object-oriented - every value is an object</li>
+		<li>Scala is functional -  every function is a value</li>
+		<li>Scala is statically typed - with local type inference</li>
+		<li>Scala is concise - typically 3 to 4 times more than Java</li>
+		<li>Scala is based on JVM - full compatibility with Java<sup>*</sup></li>
+	</ul>
+	<span class="footnote"><sup>*</sup> but sometimes calling Scala from Java is a bit tricky</span>
+</div>
+
+<div id="mb" class="step" data-x="900" data-y="-470" data-rotate="-90">
+	<div class="quote">
+		<img src="img/people/james-gosling.jpg">
+
+		<p>If I were to pick a language today other than Java, it would be Scala.</p>
+		<span class="author">James Gosling<span class="comment">father of Java</span></span>
+	</div>
+</div>
+
+<div id="history" class="step" data-x="900" data-y="-1380" data-rotate="-90">
+	<div class="quote">
+		<img src="img/people/james-strachan.jpg">
+
+		<p>I can honestly say if someone had shown me the Programming Scala book by Martin Odersky, Lex Spoon & Bill
+			Venners back in 2003 I'd probably have never created Groovy.</p>
+		<span class="author">James Strachan<span class="comment">creator of Groovy</span></span>
+	</div>
+</div>
+
+<div id="type-system" class="step" data-x="450" data-y="-2500" data-scale="3">
+	<h1>Language</h1>
+
+	<h1 class="second-line">features</h1>
+</div>
+
+<div id="basics" class="step" data-x="-500" data-y="-2950" data-rotate="0" data-scale="0.25">
+	<div class="header">Scala basics</div>
+</div>
+
+<div id="variables" class="step" data-x="-600" data-y="-3020" data-rotate="0" data-scale="0.10">
+	Variables
+	<ul>
+		<li>you can choose between values (immutable) and variables (mutable)</li>
+		<li>immutable values are preferred, as mutability is rarely needed</li>
+		<li>lazy values are initialized on first access, then value is stored</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// variable
+		var name = "Jerzy"
+		name = "John"
+
+		// immutable value, cannot be changed
+		val age = 24
+
+		// does not compile
+		// age = 15
+
+		// lazy initialization
+		lazy val x = someExpensiveComputation()
+	</script>
+</div>
+
+<div id="loops" class="step" data-x="-500" data-y="-3030" data-rotate="0" data-scale="0.10">
+	Controls
+	<ul>
+		<li>everything returns a value</li>
+		<li>only sometimes this value is Unit (something like void in java)</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// conditionals return values
+		def abs(x: Double) = if (x >= 0) x else -x
+
+		val matrix = Seq(Seq(1, 2, 3), Seq(4, 5, 6), Seq(7, 8, 9))
+
+		// simple for loop
+		for (i <- 1 to 10 by 2) print(i)
+
+		// for comprehensions
+		for {
+			row <- matrix
+			number <- row
+			if number % 2 == 0
+		} {
+			println(number)
+		}
+
+		// loops also returns values (if we want them to)
+		val squares = for (i <- 1 to 100) yield i * i
+	</script>
+</div>
+
+<div id="exceptions" class="step" data-x="-400" data-y="-3020" data-rotate="0" data-scale="0.10">
+	Exceptions
+	<ul>
+		<li>all exceptions are unchecked</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		import java.io.{IOException, File, PrintWriter}
+		import java.util.Date
+
+		val writer = new PrintWriter(new File("date.txt"))
+
+		// try/catch block also returns values
+		val result = try {
+			writer.println(new Date)
+			"success"
+		} catch {
+			case e: IOException => "io exception"
+			case e: Throwable => "other exception"
+		} finally {
+			// we do not have catch an exception here
+			writer.close()
+		}
+	</script>
+</div>
+
+<div id="string" class="step" data-x="-500" data-y="-2890" data-rotate="0" data-scale="0.10">
+	String interpolation
+	<ul>
+		<li>string concatenation made easy</li>
+		<li>generic mechanism - you can define your own interpolators</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		val you = "Jerzy"
+
+		s"$you can compose messages ${"much " * 3}easier."
+
+		raw"$you can write regexes like this: C:\Users\$you\*"
+	</script>
+</div>
+
+<div id="types-quote" class="step" data-x="1560" data-y="-2650" data-rotate="90" data-scale="0.1">
+	<div class="quote">
+		<img src="img/people/alan-kay.jpg">
+
+		<p>I'm not against types, but I don't know of any type systems that aren't a complete pain, so I still like
+			dynamic typing.</p>
+		<span class="author">Alan Kay</span>
+	</div>
+</div>
+
+<div id="static-typing" class="step" data-x="1500" data-y="-2650" data-rotate="90" data-scale="0.25">
+	<div class="header">Type system</div>
+	<ul>
+		<li>types are inferred almost everywhere!</li>
+		<li>you can still provide types wherever you want to</li>
+		<li>you have to provide types for method parameters</li>
+		<li>and return types for recursive functions</li>
+	</ul>
+</div>
+
+<div id="types-scala-example" class="step" data-x="1420" data-y="-2700" data-rotate="90" data-scale="0.1">
+	Scala
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// inferred type: String
+		val name = "John"
+
+		// inferred type: Map[String, Map[String, List[Int]]]
+		var marks = Map(name ->
+						Map("Geography" -> List(5, 6, 5),
+							"Biology" -> List(1, 2, 1)))
+
+		// explicit parameter and return type needed
+		def factorial(n: Int): Int =
+			if (n == 0) 1 else n * factorial(n - 1)
+	</script>
+</div>
+
+<div id="types-java-example" class="step" data-x="1420" data-y="-2600" data-rotate="90" data-scale="0.1">
+	Java
+	<script type="syntaxhighlighter" class="brush: java, gutter: false"><![CDATA[
+		String name = "John";
+
+		Map<String, Map<String, List<Integer>>> marks =
+			new HashMap<String, Map<String, List<Integer>>>();
+
+		HashMap<String, List<Integer>> johnMarks =
+					new HashMap<String, List<Integer>>();
+		johnMarks.put("Geography", Arrays.asList(5, 6, 5));
+		johnMarks.put("Biology", Arrays.asList(1, 2, 1));
+
+		marks.put(name, johnMarks);
+		]]>
+	</script>
+</div>
+
+<div id="model" class="step" data-x="-500" data-y="-2250" data-rotate="180" data-scale="0.5">
+	<div class="header">Object Model</div>
+</div>
+
+<div id="classes" class="step" data-x="-320" data-y="-2250" data-rotate="90" data-scale="0.02">
+	Classes
+	<ul>
+		<li>every value is an object</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// primary constructor
+		class Complex(val r: Double, val i: Double) {
+
+			// Auxiliary constructor
+			def this() {
+				this(0, 0)
+			}
+
+			// method - NOT an overloaded operator
+			def +(other: Complex) =
+				new Complex(this.r + other.r, this.i + other.i)
+
+			// override is necessary
+			override def toString = s"Complex($r, $i)"
+		}
+
+		val complex = new Complex(1, 2) // > Complex(1, 2)
+
+		// syntactic sugar for complex.+(new Complex(3, 4))
+		complex + new Complex(3, 4) // > Complex(4, 6)
+	</script>
+</div>
+
+<div id="objects" class="step" data-x="-455" data-y="-2257" data-rotate="90" data-scale="0.02">
+	Objects
+	<ul>
+		<li>companion objects for "static" methods</li>
+		<li>built-in singleton pattern</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// class from previous slide
+		class Complex(val r: Double, val i: Double) { /* ... */ }
+
+		// companion object - place all "static" method here
+		object Complex {
+			def create(r: Double, i: Double): Complex = new Complex(r, i)
+
+			val Zero = new Complex()
+		}
+
+		Complex.create(1, 2) // > Complex(1, 2)
+
+		Complex.Zero // > Complex(0, 0)
+	</script>
+</div>
+
+<div id="inheritance-model" class="step" data-x="-422" data-y="-2250" data-rotate="180" data-scale="0.01">
+	Inheritance model
+	<ul>
+		<li>single inheritance with Classes</li>
+		<li>multiple inheritance with Traits</li>
+		<li><b>super</b> calls are linearized (no diamond problem)</li>
+		<li>great solution for re-usage of behaviour</li>
+	</ul>
+</div>
+
+<div id="traits" class="step" data-x="-590.5" data-y="-2258" data-rotate="180" data-scale="0.02">
+	Traits
+	<ul>
+		<li>interfaces with (partial) implementation</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		import java.util.logging.Logger
+
+		trait Loggable {
+			val logger: Logger = Logging.getLogger(this)
+		}
+
+		abstract class BaseEntity {
+			// some important methods
+		}
+
+		class User extends BaseEntity with Loggable {
+			logger.info("User created!")
+		}
+	</script>
+</div>
+
+<div id="case-classes" class="step" data-x="-628" data-y="-2258" data-rotate="90" data-scale="0.02">
+	Case classes
+	<ul>
+		<li>classes on steroids!</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// Case class - we get toString, hashCode, equals,
+		// copy constructor and static factory for free !
+		case class Complex(r: Double, i: Double)
+
+		val c = Complex(1, 2)
+		c.i // > 2
+
+		c.toString // > Complex(1, 2)
+
+		c.copy(r = c.r + 2) == Complex(3, 2) // > true
+	</script>
+</div>
+
+<div id="pattern-matching" class="step" data-x="-665" data-y="-2264" data-rotate="0" data-scale="0.015">
+	Pattern matching
+	<ul>
+		<li>forget about chained conditions and switches</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		case class Person(firstName: String, lastName: String, age: Int)
+
+		val aPerson: Person = ???
+
+		val canDo = aPerson match {
+
+			// here we only care about Chuck Norris, and not his age -
+			// Chuck Norris is ageless
+			// Underscore in Scala usually means "wildcard" or
+			// "we don't care about it"
+			case Person("Chuck", "Norris", _) => true
+
+			// matches only adults who are not Chuck Norris
+			case Person(_, _, age) if (age >= 18) => true
+
+			// matches everything else
+			// if you leave it out you will get a MatchError
+			// for non-matching object
+			case _ => false
+		}
+	</script>
+</div>
+
+<div id="invocation" class="step" data-x="-665" data-y="-2252" data-rotate="180" data-scale="0.015">
+	Default and named parameters
+	<ul>
+		<li>no more method chaining</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// description has default value
+		case class User(firstName: String,
+		                lastName: String,
+		                description: String = "no description",
+		                email: String)
+
+		val user = User(email = "jmuller@virtuslab.com",
+			firstName = "Jerzy",
+			lastName = "Müller")
+		// > User(Jerzy, Müller, no description, jmuller@virtuslab.com)
+	</script>
+</div>
+
+<div id="functions" class="step" data-x="400" data-y="-2950" data-rotate="0" data-scale="0.5">
+	<div class="header">Functions</div>
+	<ul>
+		<li>First class citizens</li>
+		<li>Each function is an object</li>
+		<li>Functions can be stored in variables or passed as arguments</li>
+	</ul>
+</div>
+
+<div id="functions-declaring" class="step" data-x="218" data-y="-2990" data-rotate="0" data-scale="0.015">
+	Declaring functions
+	<ul>
+		<li>concise syntax for anonymous functions</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// standard version for one parameter
+		(x: Int) => x + 1
+
+		// multiple parameters
+		(x: Int, y: Int) => "(" + x + ", " + y + ")"
+
+		// no parameters
+		() => { System.getProperty("user.dir") }
+	</script>
+</div>
+
+<div id="functions-types" class="step" data-x="252" data-y="-2975" data-rotate="-90" data-scale="0.015">
+	Functional types
+	<ul>
+		<li>same syntax can be used for types</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// standard version for one parameter
+		val inc: Int => Int =
+			(x: Int) => x + 1
+
+		// multiple parameters
+		val print: (Int, Int) => String =
+			(x: Int, y: Int) => "(" + x + ", " + y + ")"
+
+		// no parameters
+		val hello: () => String =
+			() => { System.getProperty("user.dir") }
+	</script>
+</div>
+
+
+<div id="functions-impl" class="step" data-x="410" data-y="-2972" data-rotate="-180" data-scale="0.015">
+	Implementation of functions
+	<ul>
+		<li>each function is translated to anonymous class</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		(i: Numeric) => i % 2 == 0
+
+		// is translated into
+
+		new Function1[Numeric, Boolean] {
+			// syntactic sugar, you can call apply() method using only ()
+			def apply(i: Numeric): Boolean = i % 2 == 0
+		}
+	</script>
+</div>
+
+<div id="functions-collections" class="step" data-x="450" data-y="-2970" data-rotate="-270" data-scale="0.015">
+	Functions & collections
+	<ul>
+		<li>Scala collections comes with huge amount of higher-order methods</li>
+		<li>Each of these typically takes some function as parameter</li>
+		<li>These methods offers concise syntax for very complex operations</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		case class User(name: String, age: Int)
+
+		val users = List(User("Jerzy", 24), User("Kuba", 16))
+
+		// split collection in two by predicate
+		val (minors, adults) = users partition (user => user.age < 18)
+
+		// calc. squares of numbers divisible by 3 in range from 1 to 100
+		val num = (1 to 100) filter (i => i % 3 == 0) map (i => i * i)
+
+		// print result
+		num foreach(i => println(i))
+
+		// you can replace single appearance of parameter with _
+		num foreach(println _)
+	</script>
+</div>
+
+<!-- TODO - paralell collections and views -->
+
+<!-- Advanced -->
+
+<div id="advanced" class="step" data-x="1900" data-y="0" data-rotate="90" data-scale="3">
+	<h1>Advanced <span class="second-line">techniques</span></h1>
+</div>
+
+<div id="dynamic-typing" class="step" data-x="2100" data-y="700" data-rotate="90" data-scale="0.25">
+	Structural typing
+	<ul>
+		<li>dynamic typing for type-safe languages</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		object Game {
+
+			class Duck {
+				def quack = "Quack, quack!"
+			}
+
+			class Dragon {
+				def roar = "Roaarrrr!"
+			}
+
+			class DisguisedDragon {
+				def roar = "Roaarrrr!"
+				def quack = roar
+			}
+
+			// we can define by it's methods
+			def intoTheForest(duck: { def quack: String } ) {
+				println(duck.quack)
+			}
+
+			// alternatively you can define a type
+			type D = { def quack: String }
+			def intoTheForest(duck: D ) = duck.quack
+
+			intoTheForest(new Duck) // > Quack, quack!
+
+			// does not compile
+			// intoTheForest(new Dragon)
+
+			intoTheForest(new DisguisedDragon) // > Roaarrrr!
+		}
+	</script>
+</div>
+
+<div id="implicit" class="step" data-x="2100" data-y="950" data-rotate="90" data-scale="0.25">
+	Implicit Conversion
+	<ul>
+		<li>adding new methods to existing classes</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		object Implicits {
+			// 2.10 notation
+			implicit class RichInt(val self: Int) {
+				def toHexString: String =
+					java.lang.Integer.toHexString(self)
+			}
+
+			256.toHexString
+
+			// compiles into
+
+			new RichInt(256).toHexString
+		}
+	</script>
+</div>
+
+<div id="value-classes" class="step" data-x="2100" data-y="1200" data-rotate="90" data-scale="0.25">
+	Value classes
+	<ul>
+		<li>just add <b>extends AnyVal</b></li>
+		<li>avoid unnecessary object creation</li>
+		<li>with implicit classes creates alternative for extension methods</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		object BetterImplicits {
+			implicit class MyRichInt(val self: Int) extends AnyVal {
+				def toHexString: String =
+					java.lang.Integer.toHexString(self)
+			}
+
+			256.toHexString
+
+			// compiles into (generated by compiler) static method call
+			MyRichInt.extension$toHexString(256)
+		}
+	</script>
+</div>
+
+<div id="concurrency" class="step" data-x="1700" data-y="-770" data-rotate="-90" data-scale="0.25">
+	Concurrency
+	<p><i>A programmer had a problem. He thought to himself, "I know, I'll solve it with threads!". has Now problems. two he</i></p>
+	<br>
+	<ul>
+		<li>Thread-based concurrency is hard</li>
+		<li>Scala introduces Erlang-style actor-based concurrency</li>
+		<li>Actors enable programming in message-passing paradigm</li>
+		<li>In 2.10 Scala actors were replaced by Akka Actors</li>
+		<li>More on actors on next presentation</li>
+	</ul>
+</div>
+
+<div id="dsl" class="step" data-x="1700" data-y="-1020" data-rotate="-90" data-scale="0.25">
+	DSLs
+	<ul>
+		<li>Scala syntactic sugar enables creation of internal DSLs</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		// test frameworks
+		test("pop is invoked on an empty stack") {
+		    val emptyStack = new Stack[String]
+		    evaluating {
+			    emptyStack.pop()
+		    } should produce [NoSuchElementException]
+		    emptyStack should be ('empty)
+		}
+
+		// SQL (Squeryl)
+		def songCountByArtistId: Query[GroupWithMeasures[Long, Long]] =
+			from(artists, songs)((a, s) =>
+				where(a.id === s.artistId)
+				groupBy (a.id)
+				compute (countDistinct(s.id))
+			)
+
+		// my own experiment ;)
+		val wynik =
+			jeśli (2 < 3) {
+				"Mniejsze"
+			} inaczej {
+				"Większe"
+			}
+	</script>
+</div>
+
+<div id="baysick" class="step" data-x="1700" data-y="-1145" data-rotate="-90" data-scale="0.01">
+	<div class="header">Baysick: A Scala DSL Implementing BASIC</div>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		object Lunar extends Baysick {
+			def main(args: Array[String]) = {
+				10 PRINT "Welcome to Baysick Lunar Lander v0.9"
+				20 LET ('dist := 100)
+				30 LET ('v := 1)
+				40 LET ('fuel := 1000)
+				50 LET ('mass := 1000)
+
+				60 PRINT "You are drifting towards the moon."
+				70 PRINT "You must decide how much fuel to burn."
+				80 PRINT "To accelerate enter a positive number"
+				90 PRINT "To decelerate a negative"
+
+				100 PRINT "Distance " % 'dist % "km, " % "Velocity " %
+						'v % "km/s, " % "Fuel " % 'fuel
+				110 INPUT 'burn
+				120 IF ABS('burn) <= 'fuel THEN 150
+				130 PRINT "You don't have that much fuel"
+				140 GOTO 100
+				150 LET ('v := 'v + 'burn * 10 / ('fuel + 'mass))
+				160 LET ('fuel := 'fuel - ABS('burn))
+				170 LET ('dist := 'dist - 'v)
+				180 IF 'dist > 0 THEN 100
+				190 PRINT "You have hit the surface"
+				200 IF 'v < 3 THEN 240
+				210 PRINT "Hit surface too fast (" % 'v % ")km/s"
+				220 PRINT "You Crashed!"
+				230 GOTO 250
+				240 PRINT "Well done"
+
+				250 END
+
+				RUN
+			}
+		}
+	</script>
+	<div class="footnote"><a href="http://blog.fogus.me/2009/03/26/baysick-a-scala-dsl-implementing-basic/">
+		original blog post</a></div>
+</div>
+
+<div id="generics" class="step" data-x="1700" data-y="-1270" data-rotate="-90" data-scale="0.25">
+	Type variance (generics)
+	<ul>
+		<li>Scala offers covariant and contravariant types</li>
+		<li>Validity of usage of (co|contra)variant types is checked by compiler</li>
+	</ul>
+	<script type="syntaxhighlighter" class="brush: scala, gutter: false">
+		object System {
+			class User
+			class Admin extends User
+
+			def notify(users: List[User]) = ???
+
+			val users: List[User] = List(new User, new User)
+			val administrators: List[Admin] = List(new Admin)
+
+			notify(users)
+
+			// we can notify administrators 'cause List is covariant
+			// and List[Admin] is a List[User]
+			notify(administrators)
+		}
+	</script>
+</div>
+
+<div id="macros" class="step" data-x="1900" data-y="0" data-rotate="90" data-scale="0.25">
+	Macros
+	<ul>
+		<li>experimental feature, available in 2.10 under switch</li>
+		<li>looks like normal methods or classes</li>
+		<li>type safe!</li>
+		<li>material for another 1h talk</li>
+	</ul>
+</div>
+
+<div id="tools" class="step" data-x="-1000" data-y="-300" data-rotate="90" data-scale="3">
+	<div>Tools & frameworks</div>
+</div>
+
+<div id="ide" class="step" data-x="-1300" data-y="-1200" data-rotate="90" data-scale="0.5">
+	<p>IDEs</p>
+	<img src="img/eclipse.png">
+	<img src="img/idea.png">
+</div>
+
+<div id="frameworks" class="step" data-x="-1300" data-y="-500" data-rotate="90" data-scale="1">
+	<p>Web frameworks</p>
+	<img src="img/play.png">
+	<img src="img/lift.png">
+</div>
+
+<div id="android" class="step" data-x="-1300" data-y="200" data-rotate="90" data-scale="0.5">
+	<img src="img/android-logo.png">
+</div>
+
+<div id="build" class="step" data-x="-1300" data-y="700" data-rotate="90" data-scale="1">
+	<p>Build tools</p>
+	<img src="img/maven-logo.png">
+	<span id="sbt">sbt</span>
+</div>
+
+<div id="problems" class="step" data-x="-1100" data-y="1300" data-rotate="0" data-scale="1">
+	<div>The things you must live with</div>
+	<ol>
+		<li>Binary compatibility</li>
+		<li>Diversity of a language</li>
+		<li>Good IDE is a must</li>
+		<li>Compiler speed</li>
+		<li>Scala is still evolving</li>
+	</ol>
+</div>
+
+<div id="sources" class="step" data-x="-1100" data-y="1650" data-rotate="0" data-scale="1">
+	Sources and inspirations
+	<ul>
+		<li><a href="http://prezi.com/v5yddiqib_qo/enterprise-scala/" target="_blank">Enterprise Scala</a> - presentation by Paweł Dolega</li>
+		<li><a href="http://zeroturnaround.com/rebellabs/devs/scala-2013-a-pragmatic-guide-to-scala-adoption-in-your-java-organization/" target="_blank">Scala 2013: A Pragmatic Guide To Scala Adoption in Your Java Organization</a></li>
+		<li><a href="http://vimeo.com/53705249#at=0" target="_blank">Intel hosts Dr. Martin Odersky presenting Scala 2.10</a></li>
+		<li><a href="http://www.scala-lang.org/node/104">A Tour of Scala</a></li>
+		<li><a href="http://bartaz.github.com/impress.js/">impress.js</a> - library used to build this presentation</li>
+	</ul>
+</div>
+
+<div id="questions" class="step"  data-x="2100" data-y="-1650" data-rotate="0" data-scale="2">
+	<div class="header">Thank you :)</div>
+</div>
+
+<div id="overview" class="step" data-x="0" data-y="0" data-scale="8"></div>
+
+</div>
+
+<script type="text/javascript">
+	SyntaxHighlighter.all()
+</script>
+
+<!--
+    
+    Hint is not related to impress.js in any way.
+    
+    But it can show you how to use impress.js features in creative way.
+    
+    When the presentation step is shown (selected) its element gets the class of "active" and the body element
+    gets the class based on active step id `impress-on-ID` (where ID is the step's id)... It may not be
+    so clear because of all these "ids" in previous sentence, so for example when the first step (the one with
+    the id of `bored`) is active, body element gets a class of `impress-on-bored`.
+    
+    This class is used by this hint below. Check CSS file to see how it's shown with delayed CSS animation when
+    the first step of presentation is visible for a couple of seconds.
+    
+    ...
+    
+    And when it comes to this piece of JavaScript below ... kids, don't do this at home ;)
+    It's just a quick and dirty workaround to get different hint text for touch devices.
+    In a real world it should be at least placed in separate JS file ... and the touch content should be
+    probably just hidden somewhere in HTML - not hard-coded in the script.
+    
+    Just sayin' ;)
+    
+-->
+<div class="hint">
+	<p>Use a spacebar or arrow keys to navigate</p>
+</div>
+<script>
+	if ("ontouchstart" in document.documentElement) {
+		document.querySelector(".hint").innerHTML = "<p>Tap on the left or right to navigate</p>";
+	}
+</script>
+
+<script src="js/impress.js"></script>
+<script>impress().init();</script>
+
+</body>
+</html>
